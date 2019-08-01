@@ -43,6 +43,7 @@ class Events
         // 初始化redis
         EasyGatewayCore::initRedis();
         if ($worker->id == 0) {
+            // 多久心跳一次 秒为单位
             \Workerman\Lib\Timer::add(60, function (){
                 \App\Controller\Alipay::pong(EasyGatewayCore::$sysConf->get('alipay_cookie'));
                 // 十秒获取一次支付宝订单

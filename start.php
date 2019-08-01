@@ -38,6 +38,8 @@ foreach(glob(__DIR__.'/App/*/start*.php') as $start_file)
 {
     require_once $start_file;
 }
+// 将屏幕打印输出到Worker::$stdoutFile指定的文件中
+Worker::$stdoutFile = getcwd().'/pay.log';
 
 // 运行所有服务
 Worker::runAll();

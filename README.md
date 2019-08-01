@@ -34,7 +34,7 @@ composer install
 启动停止命令
 =========
 
-调试启动  
+debug调试启动  
 `php start.php start`
 
 常驻后台启动  
@@ -60,7 +60,8 @@ composer install
 2. 请保证服务器或本机为linux系统，且安装了composer 及 PHP7 及 redis    
 3. 请保证服务器或本机php扩展支持pcntl、posix扩展
 4. easymqpay只会抓取当前5分钟内支付的订单并回调，使用者可据此判断订单    
-5. 每次修改代码后请最好重启一次！！        
+5. 每次修改代码后请最好重启一次！！     
+6. 请先以debug方式启动查看有无报错后再常驻内存启动      
 
 使用方法
 =========
@@ -93,6 +94,19 @@ return [
     // 异步回调url
     'notify_url' => 'http://baidu.com'
 ];
+```
+### 修改定时时间,个人建议1分钟一次（App/EasyGateway/Events.php）47行：  
+   
+```php
+ if ($worker->id == 0) {
+             // 多久心跳一次 秒为单位
+            \Workerman\Lib\Timer::add(60, function (){
+                \App\Controller\Alipay::pong(EasyGatewayCore::$sysConf->get('alipay_cookie'));
+                // 十秒获取一次支付宝订单
+                \App\Controller\Alipay::getNewOrderList(EasyGatewayCore::$sysConf->get('alipay_cookie'));
+            });
+        }
+
 ```
 
 ### 抓取到新的支付宝成功支付的订单后，服务器会向使用者服务端进行回调
