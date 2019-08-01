@@ -1,0 +1,19 @@
+{
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    },
+
+    "name"  : "workerman/gateway-worker-demo",
+    "keywords": ["distributed","communication"],
+    "homepage": "http://www.workerman.net",
+    "license" : "MIT",
+    "require": {
+        "workerman/gateway-worker" : ">=3.0.0",
+        "hassankhan/config": "^2.0",
+        "illuminate/database": "^5.8",
+        "guzzlehttp/guzzle": "^6.3",
+        "predis/predis": "^1.1"
+    }
+}
